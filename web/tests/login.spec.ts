@@ -38,7 +38,7 @@ test.describe("Email Login", () => {
 
     // Check that the email login form is displayed
     await expect(login.emailInput).toBeVisible();
-    await login.emailInput.fill("test@gmail.com");
+    await login.emailInput.pressSequentially("test@gmail.com");
     await expect(login.signInButton).toBeVisible();
     await login.signInButton.click();
 
@@ -60,7 +60,7 @@ test.describe("Email Login", () => {
     await login.emailLoginButton.click();
 
     await expect(login.emailInput).toBeVisible();
-    await login.emailInput.fill("existing@gmail.com");
+    await login.emailInput.pressSequentially("existing@gmail.com");
     await expect(login.signInButton).toBeVisible();
     await login.signInButton.click();
 
@@ -81,7 +81,7 @@ test.describe("Email Login", () => {
     await login.emailLoginButton.click();
 
     await expect(login.emailInput).toBeVisible();
-    await login.emailInput.fill("non-existing@test.com");
+    await login.emailInput.pressSequentially("non-existing@test.com");
     await expect(login.signInButton).toBeVisible();
     await login.signInButton.click();
 
@@ -101,7 +101,7 @@ test.describe("Email Login", () => {
     await login.emailLoginButton.click();
 
     await expect(login.emailInput).toBeVisible();
-    await login.emailInput.fill("invalid-email");
+    await login.emailInput.pressSequentially("invalid-email");
     await expect(login.signInButton).toBeVisible();
     await login.signInButton.click();
 
