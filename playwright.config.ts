@@ -4,9 +4,11 @@ import { defineConfig, devices } from "@playwright/test";
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from "dotenv";
+import path from "path";
+
+const environment = process.env.TEST_ENV || "test";
+dotenv.config({ path: path.resolve(__dirname, `.env.${environment}`) });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -32,22 +34,27 @@ export default defineConfig({
     trace: "on-first-retry",
     storageState: undefined,
     serviceWorkers: "block",
-  },
+    screenshot: "only-on-failure",
 
+    baseURL: process.env.BASE_URL || "https://restful-booker.herokuapp.com",
+  },
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "chromium",
+      name: "web-chromium",
+      testDir: "./web/tests",
       use: { ...devices["Desktop Chrome"] },
     },
 
     {
-      name: "firefox",
+      name: "web-firefox",
+      testDir: "./web/tests",
       use: { ...devices["Desktop Firefox"] },
     },
 
     {
-      name: "webkit",
+      name: "web-webkit",
+      testDir: "./web/tests",
       use: { ...devices["Desktop Safari"] },
     },
 
@@ -70,6 +77,17 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
+
+    {
+      name: "API",
+      testDir: "./api/tests",
+      use: {
+        extraHTTPHeaders: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    },
   ],
 
   /* Run your local dev server before starting the tests */
