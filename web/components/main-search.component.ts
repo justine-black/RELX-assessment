@@ -37,7 +37,7 @@ export class MainSearch {
       '//div[@aria-controls="flight-trip-type-dropdown"]',
     );
     this.travelersButton = page.locator(
-      '//div[aria-controls="nl-search-flight-horizontal-search-form-travelers-dropdown"]',
+      '//div[@aria-controls="nl-search-flight-horizontal-search-form-travelers-dropdown"]',
     );
     this.searchButton = page.locator('//div[@aria-label="Search"]').first();
 
