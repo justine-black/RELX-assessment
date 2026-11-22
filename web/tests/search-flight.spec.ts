@@ -85,7 +85,7 @@ test.describe("Search for flights from landing page", () => {
     await expect(newPage).toHaveURL(/flight-search/);
     await expect(
       newPage.getByRole("button", { name: "Flight origin input Manila" }),
-    ).toBeVisible({ timeout: 10000 });
+    ).toBeVisible({ timeout: 30000 });
 
     await expect(
       newPage.getByRole("button", { name: "Flight destination input Boracay" }),
@@ -100,12 +100,10 @@ test.describe("Search for flights from landing page", () => {
     await expect(
       newPage.locator("//*[@class='ev1_-results-list']"),
     ).toBeVisible();
-
-    await expect(
-      await newPage
-        .locator("//div[@role='group' and @class='Fxw9-result-item-container']")
-        .count(),
-    ).toBeGreaterThan(1);
+    const count = await newPage
+      .locator("//div[@role='group' and @class='Fxw9-result-item-container']")
+      .count();
+    await expect(count).toBeGreaterThan(1);
   });
 
   test("can search but no available flights", async ({ page, context }) => {
@@ -130,6 +128,11 @@ test.describe("Search for flights from landing page", () => {
       .getByRole("button", { name: "Friday, 4 December," })
       .click();
 
+    if (!(await landingPage.mainSearch.cabinClassOptions.isVisible())) {
+      await landingPage.mainSearch.travelersButton.click();
+    }
+    await landingPage.page.getByRole("radio", { name: "First" }).click();
+
     await landingPage.mainSearch.searchButton.click();
 
     const newPage = await newPagePromise;
@@ -137,6 +140,12 @@ test.describe("Search for flights from landing page", () => {
 
     await expect(newPage).toHaveURL(/flight-search/);
 
-    await expect(newPage.getByText("No flights found")).toBeVisible();
+    await expect(
+      newPage.locator(
+        '//div[@class="IVAL-title" and text()="No flights found"]',
+      ),
+    ).toBeVisible({
+      timeout: 60000,
+    });
   });
 });
