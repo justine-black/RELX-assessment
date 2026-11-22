@@ -1,5 +1,5 @@
-import { test, expect } from "@playwright/test";
-// import { test, expect } from "../fixtures/test.fixture";
+// import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures/test.fixture";
 import { CheapFlightsLandingPage } from "../pages/cheap-flights-landing.page";
 
 test("has logo", async ({ page }) => {

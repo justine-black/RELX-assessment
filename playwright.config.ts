@@ -35,8 +35,7 @@ export default defineConfig({
     storageState: undefined,
     serviceWorkers: "block",
     screenshot: "only-on-failure",
-
-    baseURL: process.env.BASE_URL || "https://restful-booker.herokuapp.com",
+    viewport: { width: 1280, height: 720 },
   },
   /* Configure projects for major browsers */
   projects: [
@@ -82,6 +81,7 @@ export default defineConfig({
       name: "API",
       testDir: "./api/tests",
       use: {
+        baseURL: process.env.BASE_URL || "https://restful-booker.herokuapp.com",
         extraHTTPHeaders: {
           "Content-Type": "application/json",
           Accept: "application/json",

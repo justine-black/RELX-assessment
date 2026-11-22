@@ -49,8 +49,8 @@ test.describe("POST /booking - Create Booking", () => {
   }) => {
     const response = await request.post("/booking", {
       data: {
-        firstname: "John",
-        lastname: "Doe",
+        firstname: "Justine",
+        lastname: "Bieber",
       },
     });
 
