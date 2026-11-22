@@ -1,23 +1,25 @@
 import { test as base, expect } from "@playwright/test";
 import { CheapFlightsLandingPage } from "../pages/cheap-flights-landing.page";
 
-type MyFixtures = {
+type Fixtures = {
+  blockGoogleSignIn: void;
   landingPage: CheapFlightsLandingPage;
 };
 
-export const test = base.extend<MyFixtures>({
-  landingPage: async ({ context, page }, use) => {
-    // Block Google One Tap sign-in
-    await context.route(
-      /https:\/\/accounts\.google\.com\/gsi\//,
-      async (route) => {
-        console.log("Blocked Google sign-in:", route.request().url());
-        await route.abort();
-      },
-    );
+export const test = base.extend<Fixtures>({
+  blockGoogleSignIn: [
+    async ({ context }, use) => {
+      await context.route("**://accounts.google.com/gsi/**", (route) =>
+        route.abort(),
+      );
 
+      await use();
+    },
+    { auto: true },
+  ],
+
+  landingPage: async ({ page }, use) => {
     const landingPage = new CheapFlightsLandingPage(page);
-
     await use(landingPage);
   },
 });

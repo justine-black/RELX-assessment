@@ -15,6 +15,9 @@ export class MainSearch {
   readonly travelersButton: Locator;
   readonly searchButton: Locator;
 
+  readonly travellersOptions: Locator;
+  readonly cabinClassOptions: Locator;
+
   constructor(page: Page) {
     this.page = page;
 
@@ -23,7 +26,7 @@ export class MainSearch {
     this.carsButton = page.getByRole("link", { name: "Search for cars" });
 
     this.fromInput = page.locator("//*[@data-test-origin]");
-    this.toInput = page.locator("//*[@data-test-destination]");
+    this.toInput = page.getByRole("combobox", { name: "Ask anything" }).first();
     this.departureDateInput = page.locator(
       "//div[@role='button']//span[text()='Departure']",
     );
@@ -34,8 +37,11 @@ export class MainSearch {
       '//div[@aria-controls="flight-trip-type-dropdown"]',
     );
     this.travelersButton = page.locator(
-      '//div[aria-controls="nl-search-flight-horizontal-search-form-travelers-dropdown"]',
+      '//div[@aria-controls="nl-search-flight-horizontal-search-form-travelers-dropdown"]',
     );
-    this.searchButton = page.locator('button:has-text("Search")');
+    this.searchButton = page.locator('//div[@aria-label="Search"]').first();
+
+    this.travellersOptions = page.getByText("Travellers", { exact: true });
+    this.cabinClassOptions = page.getByText("Cabin class", { exact: true });
   }
 }

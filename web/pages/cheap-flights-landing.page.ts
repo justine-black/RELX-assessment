@@ -1,11 +1,13 @@
 import { expect, type Page, type Locator } from "@playwright/test";
 import { Header } from "../components/header.component";
 import { Login } from "../components/login.component";
+import { MainSearch } from "../components/main-search.component";
 
 export class CheapFlightsLandingPage {
   readonly page: Page;
   readonly header: Header;
   readonly login: Login;
+  readonly mainSearch: MainSearch;
   // readonly loginButton: Locator;
   // readonly fromInput: Locator;
   // readonly toInput: Locator;
@@ -17,6 +19,7 @@ export class CheapFlightsLandingPage {
     this.page = page;
     this.header = new Header(page);
     this.login = new Login(page);
+    this.mainSearch = new MainSearch(page);
     // this.loginButton = page.locator('button:has-text("Log in")');
     // this.fromInput = page.locator('input[placeholder="From"]');
     // this.toInput = page.locator('input[placeholder="To"]');
