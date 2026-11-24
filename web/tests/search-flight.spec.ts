@@ -69,8 +69,16 @@ test.describe("Search for flights from landing page", () => {
       .getByRole("button", { name: "Friday, 4 December," })
       .click();
 
-    if (!(await landingPage.mainSearch.travellersOptions.isVisible())) {
-      await landingPage.mainSearch.travelersButton.click();
+    for (let i = 0; i < 3; i++) {
+      try {
+        await landingPage.mainSearch.travellersOptions.waitFor({
+          state: "visible",
+          timeout: 3000,
+        });
+        break;
+      } catch {
+        await landingPage.mainSearch.travelersButton.click();
+      }
     }
 
     await landingPage.page
@@ -128,9 +136,18 @@ test.describe("Search for flights from landing page", () => {
       .getByRole("button", { name: "Friday, 4 December," })
       .click();
 
-    if (!(await landingPage.mainSearch.cabinClassOptions.isVisible())) {
-      await landingPage.mainSearch.travelersButton.click();
+    for (let i = 0; i < 3; i++) {
+      try {
+        await landingPage.mainSearch.cabinClassOptions.waitFor({
+          state: "visible",
+          timeout: 3000,
+        });
+        break;
+      } catch {
+        await landingPage.mainSearch.travelersButton.click();
+      }
     }
+
     await landingPage.page.getByRole("radio", { name: "First" }).click();
 
     await landingPage.mainSearch.searchButton.click();
